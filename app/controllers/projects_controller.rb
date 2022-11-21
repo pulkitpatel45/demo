@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.includes(:tasks, :users).all # eager loading, N+1 query problem
   end
 
   # GET /projects/1 or /projects/1.json
