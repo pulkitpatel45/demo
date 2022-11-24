@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_15_043026) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_22_094818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "daily_status_updates", force: :cascade do |t|
+    t.string "to"
+    t.date "status_date"
+    t.string "project"
+    t.time "working_hours"
+    t.text "task"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_daily_status_updates_on_user_id"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
@@ -27,6 +39,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_043026) do
     t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "estimated_hours", default: 0
+    t.integer "spend_hours", default: 0
+    t.integer "status", default: 0
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
@@ -39,10 +54,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_043026) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "daily_status_updates", "users"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users"
 end
