@@ -3,9 +3,9 @@
 <h1>Projects</h1>
 
 <div id="projects">
-  <% @projects.each do |project| %>
-  <div >
 
+  <div >
+ <% @projects.each do |project| %>
      <h2>  <%= link_to project.name, project%></h2>
      <% tasks = project.tasks %>
 
@@ -13,5 +13,5 @@
 
   <% end %>
 </div>
-
+</div>
 <%= link_to "New project", new_project_path %>
