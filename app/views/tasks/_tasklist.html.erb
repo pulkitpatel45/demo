@@ -1,26 +1,39 @@
 <table class = "table table-striped" >
-    <thead class = "thead-dark">
-      <tr class="text-bg-warning">
-        <th scope="col">Task</th>
-        <th scope="col">Project</th>
-        <th scope="col">Due Date </th>
-        <th scope="col">Assigned To</th>
-        <th scope="col">Edit/Delete</th>
+  <thead class = "thead-dark">
+    <tr class="text-bg-warning">
+      <th scope="col">id</th>
+      <th scope="col">Task</th>
+      <th scope="col">Project</th>
+      <th scope="col">Due Date </th>
+      <th scope="col">Assigned To</th>
+      <th scope="col">Edit/Delete</th>
+      <th scope="col">Estimated hours</th>
+      <th scope="col">Spend hours</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.id %></td>
+        <td><%= link_to task.description,tasks_path %></td>
+        <td> <%= task.project.name %> </td>
+        <td> <%= task.due_date.strftime("%B %d, %Y") unless task.due_date.nil?  %> </td>
+        <td> <%= task.user.email  %> </td>
+        <td> <%= link_to "Edit", edit_task_path(task) %> / <%=  button_to 'Delete', task, method: :delete %> </td>
+        <td> <%= task.estimated_hours  %> </td>
+        <td> <%= task.spend_hours  %> </td>
+        <td>
+          <div id="status_<%= task.id %>">
+            <%= task.status %>
+          </div>
+          <div>
+            <% Task.statuses.keys.each do |status|%>
+              <%= button_to status.capitalize, task_update_status_path(task.id, status), method: :patch, class: 'btn btn-outline-danger'%>
+            <%end%>
+          </div>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-
-
-<% @tasks.each do |task| %>
-       <tr scope="row">
-          <td><%= task.description %></td>
-          <td> <%= task.project.name %> </td>
-          <td> <%= task.due_date.strftime("%B %d, %Y") unless task.due_date.nil?  %> </td>
-          <td> <%= task.user.email  %> </td>
-          <td> <%= link_to "Edit", edit_task_path(task) %> / <%=  button_to 'Delete', task, method: :delete %> </td>
-        </tr>
-      <% end %>
-
-    </tbody>
-
-  </table>
+    <% end %>
+  </tbody>
+</table>

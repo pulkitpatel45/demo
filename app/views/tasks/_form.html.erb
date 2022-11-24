@@ -4,54 +4,50 @@
       <%= pluralize(@task.errors.count, "error") %>
       prohibited this post from being saved:
     </h2>
-
     <ul>
-    <% @task.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
     </ul>
   </div>
 <% end %>
-
-
-
 <br>
 <div class="container">
-
   <%= form_for(@task) do |f| %>
-
-  <div class="form-group">
-    <%= f.label :description, "Description" %>
-    <%= f.text_field :description, class: "form-control" %>
-  </div>
-
-
-  <div class="form-group">
-    <%= f.label :due_date, "Due date"%>
-    <%= f.date_select :due_date, class: "form-control" %>
-  </div>
-
-
-  <div class="form-group">
-    <%= f.label :project_id, "Select the Project for this task:" %><br>
-    <%= f.collection_select :project_id, Project.all, :id, :name %>
-  </div>
-
-
-
-
-      <div class="form-group">
-        <%= f.label :user_id, "Select the User for this task:" %><br>
-        <%= f.collection_select :user_id, User.all, :id, :email %>
-      </div>
-
-
+    <div class="form-group">
+      <%= f.label :description, "Description" %>
+      <%= f.text_field :description, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :due_date, "Due date"%>
+      <%= f.date_select :due_date, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :project_id, "Select the Project for this task:" %><br>
+      <%= f.collection_select :project_id, Project.all, :id, :name %>
+    </div>
+    <div class="form-group">
+      <%= f.label :user_id, "Select the User for this task:" %><br>
+      <%= f.collection_select :user_id, User.all, :id, :email %>
+    </div>
+    <div class="form-group">
+      <%= f.label :estimated_hours, "estimated hours" %>
+      <%= f.number_field :estimated_hours, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :spend_hours, "spend hours" %>
+      <%= f.number_field :spend_hours, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :status %><br>
+      <%= f.select :status, Task.statuses.keys.collect{|k,v| [k.titleize, k]} %>
+     </div>
     <div class="actions">
       <%= f.submit "Submit", class: "btn btn-primary" %>
     </div>
   <% end  %>
 </div>
+<div>
 
-
-
+</div>
 

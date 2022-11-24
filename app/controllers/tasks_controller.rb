@@ -47,10 +47,14 @@ class TasksController < ApplicationController
   def update_status
     @task = Task.find(params[:id])
     @task.update(status: params[:type])
-    if @task.save
-      CrudNotificationMailer.create_notification.deliver_now
-    else
-      return
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("status_#{@task.id}", @task.status)
+        ]
+      end
+      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
