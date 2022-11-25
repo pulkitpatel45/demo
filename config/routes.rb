@@ -8,5 +8,4 @@ Rails.application.routes.draw do
   patch '/tasks/:id/update_status/:type', to: 'tasks#update_status', as: :task_update_status
   get '/contact_us', to: 'contact_us#report', as: :contact_us
   get '/users', to: 'users#index'
-  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end
