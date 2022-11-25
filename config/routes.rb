@@ -6,6 +6,5 @@ Rails.application.routes.draw do
   devise_for :users
   resources :daily_status_updates
   patch '/tasks/:id/update_status/:type', to: 'tasks#update_status', as: :task_update_status
-  get '/contact_us', to: 'contact_us#report', as: :contact_us
-  get '/users', to: 'users#index'
+  get '/report', to: 'report#reporter'
 end
